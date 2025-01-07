@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emotional Diary</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #FFFFFF; /* 기본 배경색 흰색으로 설정 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            transition: background-color 0.3s ease;
+        }
+
+        .container {
+            width: 320px;
+            text-align: center;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            position: relative;
+            top: -45px; /* 제목과 달력을 위로 이동 */
+        }
+
+        .header img {
+            width: 30px;
+            cursor: pointer; /* 클릭 가능하게 설정 */
+        }
+
+        .title {
+            font-size: 20px;
+            line-height: 1.2;
+            font-weight: bold;
+            text-align: right;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .buttons button {
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .buttons button img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            transition: transform 0.2s ease;
+        }
+
+        textarea {
+            width: calc(100% - 14px); /* 네모의 오른쪽 길이 0.3cm 추가로 늘리기 */
+            max-width: 300px; /* 가로 제한 */
+            height: 200px; /* 세로 길이 */
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 14px;
+            resize: none;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .controls button {
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .controls #playPause img {
+            width: 20px;
+        }
+
+        .controls #save {
+            width: 60px;
+            height: 30px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* 새로운 페이지 스타일 */
+        .calendar-page {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-size: 20px;
+            text-align: center;
+        }
+
+        .calendar-page a {
+            color: blue;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- 기존 페이지 -->
+    <div class="container" id="mainPage">
+        <div class="header">
+            <img id="calendarIcon" src="images/달력.png" alt="달력">
+            <div class="title">EMOTIONAL<br>DIARY</div>
+        </div>
+        <div class="buttons">
+            <button id="angry"><img src="images/화남.png" alt="화남"></button>
+            <button id="happy"><img src="images/기쁨.png" alt="기쁨"></button>
+            <button id="sad"><img src="images/슬픔.png" alt="슬픔"></button>
+        </div>
+        <textarea placeholder=" "></textarea>
+        <div class="controls">
+            <button id="playPause"><img src="images/재생.png" alt="재생"></button>
+            <button id="save">SAVE</button>
+        </div>
+    </div>
+
+    <!-- 새로운 페이지 -->
+    <div class="calendar-page" id="calendarPage" style="display: none;">
+        <a id="backToMain">대충 달력 이미지 있다 치고 이거 누르면 돌아감</a>
+    </div>
+
+    <script>
+        const body = document.body;
+
+        document.getElementById('angry').addEventListener('click', () => {
+            body.style.backgroundColor = '#FFE6E2';
+        });
+
+        document.getElementById('happy').addEventListener('click', () => {
+            body.style.backgroundColor = '#FFF9DD';
+        });
+
+        document.getElementById('sad').addEventListener('click', () => {
+            body.style.backgroundColor = '#E3F8FA';
+        });
+
+        let isPlaying = false;
+        document.getElementById('playPause').addEventListener('click', function () {
+            if (!isPlaying) {
+                this.querySelector('img').src = 'images/멈춤.png';
+                isPlaying = true;
+            } else {
+                this.querySelector('img').src = 'images/재생.png';
+                isPlaying = false;
+            }
+        });
+
+        // 페이지 전환 로직
+        const calendarIcon = document.getElementById('calendarIcon');
+        const backToMain = document.getElementById('backToMain');
+        const mainPage = document.getElementById('mainPage');
+        const calendarPage = document.getElementById('calendarPage');
+
+        calendarIcon.addEventListener('click', () => {
+            mainPage.style.display = 'none';
+            calendarPage.style.display = 'flex';
+        });
+
+        backToMain.addEventListener('click', () => {
+            calendarPage.style.display = 'none';
+            mainPage.style.display = 'block';
+        });
+    </script>
+</body>
+</html>
